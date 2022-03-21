@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.lab2.Frag1;
-import com.example.lab2.Frag2;
-import com.example.lab2.Frag3;
+import com.example.lab2.fragments.Frag1;
+import com.example.lab2.fragments.Frag2;
+import com.example.lab2.fragments.Frag3;
 import com.example.lab2.R;
 
 /**
