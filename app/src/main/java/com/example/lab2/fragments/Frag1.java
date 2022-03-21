@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.example.lab2.R;
 import com.example.lab2.databinding.ActivityMainBinding;
 import com.example.lab2.databinding.Frag1LayoutBinding;
+import com.example.lab2.model.Album;
 import com.example.lab2.model.Artist;
 
 public class Frag1  extends Fragment {
@@ -25,13 +26,34 @@ public class Frag1  extends Fragment {
                               Bundle savedInstanceState) {
         binding = Frag1LayoutBinding.inflate(inflater, container, false);
 
-        binding.btnCreate.setOnClickListener(new View.OnClickListener() {
+        binding.btnCreateAuthor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String artistName = binding.artistInput.getText().toString();
                 if(!artistName.isEmpty()){
                     Artist artist = new Artist(artistName);
                     artist.save();
+                }
+                else {
+                    Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        binding.btnCreateAlbum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String albumName = binding.albumNameInput.getText().toString();
+                String authorId = binding.albumAuthorIdInput.getText().toString();
+                if(!albumName.isEmpty() && !authorId.isEmpty()){
+                    Artist artist = Artist.findById(Artist.class,Long.parseLong(authorId));
+                    if(artist!=null){
+                        Album album = new Album(albumName, artist);
+                        album.save();
+                    }
+                    else {
+                    Toast.makeText(getActivity(), "Not found an artist", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else {
                     Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
