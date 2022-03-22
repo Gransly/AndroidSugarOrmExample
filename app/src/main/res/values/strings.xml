@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">SQLiteClient</string>
     <string name="tab_text_1">Create</string>
-    <string name="tab_text_2">Update</string>
+    <string name="tab_text_2">Create track</string>
     <string name="tab_text_3">Delete</string>
     <string name="author_name">Author name</string>
     <string name="create_author">Create Author</string>
     <string name="album_name">Album name</string>
     <string name="create_album">Create Album</string>
     <string name="author_id">Author id</string>
+    <string name="track_name">Track name</string>
+    <string name="create_track">Create track</string>
 </resources>

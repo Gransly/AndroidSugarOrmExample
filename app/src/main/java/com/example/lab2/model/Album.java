@@ -2,8 +2,8 @@ package com.example.lab2.model;
 
 import com.orm.SugarRecord;
 
-public class Album extends SugarRecord<Album> {
-    
+public class Album extends SugarRecord {
+
     private String title;
     private Artist artist;
 
