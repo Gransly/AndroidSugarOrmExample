@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
@@ -15,11 +16,13 @@ import com.example.lab2.databinding.Frag2LayoutBinding;
 import com.example.lab2.model.Album;
 import com.example.lab2.model.Artist;
 import com.example.lab2.model.Track;
+import com.example.lab2.service.TrackService;
 
 import java.util.List;
 
-public class Frag2 extends Fragment {
+public class TrackCreateFragment extends Fragment {
     private Frag2LayoutBinding binding;
+    private final TrackService trackService = new TrackService(getActivity());
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -28,33 +31,42 @@ public class Frag2 extends Fragment {
                              Bundle savedInstanceState) {
         binding = Frag2LayoutBinding.inflate(inflater, container, false);
 
+
         updateSpinnerArtist();
         updateSpinnerAlbum();
 
         binding.btnCreateTrack.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-                String trackName = binding.trackNameInput.getText().toString();
-                String authorName = binding.spinnerAuthor.getSelectedItem().toString();
-                String albumTitle = binding.spinnerAlbum.getSelectedItem().toString();
+                trackService.createTrack(binding.trackNameInput.getText().toString(),
+                        (Artist) binding.spinnerAuthor.getSelectedItem(),
+                        (Album) binding.spinnerAlbum.getSelectedItem(),
+                        new TrackService.CreateCallback() {
+                            @Override
+                            public void onError(String message) {
+                                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
 
-                if (!albumTitle.isEmpty() && !authorName.isEmpty() && !trackName.isEmpty()) {
-                    List<Artist> artists = Artist.find(Artist.class, "name = ?", authorName);
-                    List<Album> albums = Album.find(Album.class, "title = ?", albumTitle);
-                    if (artists != null && albums != null) {
-                        Track track = new Track(trackName, albums.get(0), artists.get(0));
-                        track.save();
-                        binding.trackNameInput.setText("");
-                    } else {
-                        Toast.makeText(getActivity(), "Not found an artist or album", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getActivity(), "Error of saving", Toast.LENGTH_SHORT).show();
-                }
+                            }
+
+                            @Override
+                            public void onResponse(String message) {
+                                Toast.makeText(getActivity(), "Saved!\n" + message, Toast.LENGTH_LONG).show();
+                            }
+                        });
+                binding.trackNameInput.setText("");
             }
         });
 
+        binding.fbtnReloadData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Toast.makeText(getActivity(), "Update", Toast.LENGTH_LONG).show();
+                updateSpinnerArtist();
+                updateSpinnerAlbum();
+            }
+        });
 
         return binding.getRoot();
     }
@@ -68,9 +80,8 @@ public class Frag2 extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void updateSpinnerArtist() {
         List<Artist> artists = Artist.listAll(Artist.class);
-        String[] artistNames = artists.stream().map(Artist::getName).toArray(String[]::new);
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, artistNames);
+        ArrayAdapter spinnerAdapter = new ArrayAdapter(getActivity(),
+                android.R.layout.simple_list_item_1, artists);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         binding.spinnerAuthor.setAdapter(spinnerAdapter);
     }
@@ -78,9 +89,8 @@ public class Frag2 extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void updateSpinnerAlbum() {
         List<Album> albums = Album.listAll(Album.class);
-        String[] albumsTitles = albums.stream().map(Album::getTitle).toArray(String[]::new);
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, albumsTitles);
+        ArrayAdapter spinnerAdapter = new ArrayAdapter(getActivity(),
+                android.R.layout.simple_list_item_1, albums);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         binding.spinnerAlbum.setAdapter(spinnerAdapter);
     }

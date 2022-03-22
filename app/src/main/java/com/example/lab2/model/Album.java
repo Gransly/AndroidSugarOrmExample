@@ -30,4 +30,9 @@ public class Album extends SugarRecord {
     public void setArtist(Artist artist) {
         this.artist = artist;
     }
+
+    @Override
+    public String toString() {
+        return  title;
+    }
 }

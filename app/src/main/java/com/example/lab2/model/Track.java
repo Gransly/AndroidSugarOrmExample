@@ -1,5 +1,7 @@
 package com.example.lab2.model;
 
+import androidx.annotation.NonNull;
+
 import com.orm.SugarRecord;
 
 public class Track extends SugarRecord {
@@ -39,5 +41,13 @@ public class Track extends SugarRecord {
 
     public void setArtist(Artist artist) {
         this.artist = artist;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "name: " + name+
+                "\nalbum title: " + album.getTitle() +
+                "\nartist name: " + artist.getName();
     }
 }

@@ -8,10 +8,11 @@ import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.example.lab2.fragments.Frag1;
-import com.example.lab2.fragments.Frag2;
-import com.example.lab2.fragments.Frag3;
+import com.example.lab2.fragments.ArtistCreateFragment;
+import com.example.lab2.fragments.TrackCreateFragment;
+import com.example.lab2.fragments.TrackListFragment;
 import com.example.lab2.R;
 
 /**
@@ -36,16 +37,15 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         switch (position)
         {
             case 0:
-                fragment = new Frag1();
+                fragment = new ArtistCreateFragment();
                 break;
             case 1:
-                fragment = new Frag2();
+                fragment = new TrackCreateFragment();
                 break;
             case 2:
-                fragment = new Frag3();
+                fragment = new TrackListFragment();
                 break;
         }
-
         return fragment;
     }
 

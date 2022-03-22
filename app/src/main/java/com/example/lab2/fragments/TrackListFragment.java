@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.lab2.databinding.Frag3LayoutBinding;
 
-public class Frag3 extends Fragment {
+public class TrackListFragment extends Fragment {
     private Frag3LayoutBinding binding;
 
     @Override

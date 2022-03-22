@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">SQLiteClient</string>
-    <string name="tab_text_1">Create</string>
+    <string name="tab_text_1">Create artist/album</string>
     <string name="tab_text_2">Create track</string>
-    <string name="tab_text_3">Delete</string>
+    <string name="tab_text_3">List</string>
     <string name="author_name">Author name</string>
     <string name="create_author">Create Author</string>
     <string name="album_name">Album name</string>
