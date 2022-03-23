@@ -23,7 +23,6 @@ public class ArtistCreateFragment extends Fragment {
     private Frag1LayoutBinding binding;
     private final TrackService trackService = new TrackService(getActivity());
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
@@ -76,7 +75,6 @@ public class ArtistCreateFragment extends Fragment {
         return binding.getRoot();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void updateSpinnerArtist() {
         List<Artist> artists = Artist.listAll(Artist.class);
         ArrayAdapter spinnerAdapter = new ArrayAdapter(getActivity(),
