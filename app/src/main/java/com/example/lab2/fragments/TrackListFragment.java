@@ -42,11 +42,9 @@ public class TrackListFragment extends Fragment {
         frag3LayoutBinding.lvTracks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Track track = (Track) parent.getAdapter().getItem(position);
-                Toast.makeText(getActivity(), track.toString(), Toast.LENGTH_LONG).show();
-
                 Intent intent = new Intent(getActivity(), UpdateActivity.class);
+                intent.putExtra("TRACK_ID", track.getId());
                 startActivity(intent);
-
                 //Create Activity and send clicked track
             }
         });
